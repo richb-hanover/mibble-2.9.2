@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This file was automatically generated. DO NOT EDIT! -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=ISO-8859-1"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <title>Mibble Version Information</title>
+  </head>
+
+  <body>
+
+    <h1>Mibble Version Information</h1>
+
+
+    <h2>Version 2.9.2 (2009-04-11):</h2>
+
+    <ul>
+      <li>
+        <strong>Changed missing SMI import from error to warning</strong><br/>
+        Some MIB files lacks a proper SMI MIB import, previously causing
+        a parse error due to unresolved symbols. This has now been fixed by
+        silently importing RFC1155-SMI when no other SNMP SMI module has been
+        imported, causing each of these errors to be reported as a warning
+        instead. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=7113">Bug #7113</a>
+      </li>
+
+      <li>
+        <strong>Fixed NPE issue when checking for null directories</strong><br/>
+        The <code>MibLoader</code> class didn't properly handle null
+        directories in the <code>hasDir</code> method. This caused an NPE
+        when attempting to load MIB files from the current directory without
+        using a directory prefix on the file name. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=26146">Bug #26146</a>
+      </li>
+
+      <li>
+        <strong>Fixed omitted character in extract from error MIBs</strong><br/>
+        The first character in each MIB line extracted and printed in
+        error messages was previously omitted, causing the error location to
+        be off by one character. This error was introduced when correcting
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16252">Bug #16252</a> in version 2.7. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=26150">Bug #26150</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.9.1 (2009-04-04):</h2>
+
+    <ul>
+      <li>
+        <strong>Fixed issue with input streams not closed on error</strong><br/>
+        The <code>MibLoader</code> class didn't properly close the
+        input file streams if a parse exception was encountered. Thanks to
+        Masanori Sekido for reporting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=26082">Bug #26082</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.9 (2009-03-19):</h2>
+
+    <ul>
+      <li>
+        <strong>Added complete comment extraction and printing</strong><br/>
+        The comments from all MIB constructs are now extracted and
+        stored in the respective objects. No comments are ever lost, but
+        may be assigned to a parent object in the parsed data structure.
+        The <code>MibWriter</code> pretty-printer has also been extended
+        to print all available comments. Thanks to Cisco for requesting
+        and financing this work. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=18844">Bug #18844</a>
+      </li>
+
+      <li>
+        <strong>Added new convenience methods in MibLoader class</strong><br/>
+        The <code>MibLoader</code> class has been improved with a
+        number of new convenience methods to enable improved access to
+        the MIB search path and easier unloading of all MIBs (freeing
+        the memory used).
+      </li>
+
+      <li>
+        <strong>Improved parsing speed significantly</strong><br/>
+        The <code>MibLoader</code> class is now much faster when
+        parsing MIB files, mostly due to speedups in Grammatica 1.5 but
+        also thanks to a number of speed optimizations in Mibble
+        proper. Make sure to reuse the same <code>MibLoader</code>
+        instance when parsing multiple MIB files for optimum effect of
+        these improvements.
+      </li>
+
+      <li>
+        <strong>Improved the Mibble Browser user interface</strong><br/>
+        The Mibble Browser test application has been improved in
+        various ways to make it easier to work with. It is now also
+        packaged into a separate jar file for easy startup by double-click
+        on most platforms. Thanks to Richard E. Brown for a long list of
+        suggested UI improvements.
+      </li>
+
+      <li>
+        <strong>Changed some bundled IANA and IETF MIB files</strong><br/>
+        A number of IANA and IETF MIB files bundled with Mibble have
+        been added or updated to match those distributed in
+        <code>libsmi</code> 0.4.8 (2008-04-18). Thanks to Elyes
+        Lehtihet for the reminder. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=19905">Bug #19905</a> &amp;
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=24435">Bug #24435</a>
+      </li>
+
+      <li>
+        <strong>Changed bundled SNMP API to Westhawk SNMP 6.0</strong><br/>
+        The MibbleBrowser SNMP support has been updated to use the
+        newer version 6.0 of the Westhawk SNMP stack. This fixes a few
+        issue with SNMP context ID. Thanks to Vincent Lane for reporting
+        this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=24385">Bug #24385</a>
+      </li>
+
+      <li>
+        <strong>Changed startup scripts for better auto-detection</strong><br/>
+        The various shell startup scripts for Linux, Mac and Windows
+        have been updated to have better auto-detection of the location
+        of Java and the application itself. Thanks to Richard E. Brown for
+        commenting on this.
+      </li>
+
+      <li>
+        <strong>Fixed syntax error for inline ASN.1 comments</strong><br/>
+        When an inline ASN.1 comment was ended on the same line and
+        followed by another construct, a syntax error would result. The
+        ASN.1 parser in Mibble has now been fixed to handled inline comments
+        properly. Thanks to Karl Weber for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=22841">Bug #22841</a>
+      </li>
+
+      <li>
+        <strong>Fixed NPE when parsing unresolved referenced types</strong><br/>
+        When a textual convention or similar contained an unresolved
+        type reference, a NullPointerException could occur when using the
+        defined type elsewhere (like in a <code>SEQUENCE</code> type). This
+        has now been corrected and a new reference error is shown instead.
+        Thanks to Markus Barchfeld for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=18843">Bug #18843</a>
+      </li>
+
+      <li>
+        <strong>Fixed missing padding for some hex and binary constants</strong><br/>
+        After <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17834">Bug #17834</a> there were still some cases where
+        padding would be removed from specified hexadecimal and binary
+        values in MIB files. A fix has now been implemented that takes all
+        size constraint values into consideration, not just the lower
+        bound. Thanks to M. S. Thiraviyakumar for reporting this and
+        providing a fix. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=22854">Bug #22854</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.8 (2007-01-10):</h2>
+
+    <ul>
+      <li>
+        <strong>Added default ccitt and joint-iso-ccitt symbols</strong><br/>
+        The <code>ccitt</code> and <code>joint-iso-ccitt</code> OID
+        symbols have been added to the default context. The
+        <code>zeroDotZero</code> and similar symbols are now also
+        automatically connected to the correct root symbol. Thanks to Bernd
+        Sorgenfrei for reporting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16827">Bug #16827</a>
+      </li>
+
+      <li>
+        <strong>Added enumeration comment extraction and printing</strong><br/>
+        The MIB comments around enumeration or bit set value are now
+        extracted and stored in the respective symbols. The
+        <code>MibWriter</code> pretty-printer has also been extended to
+        print these comments. Thanks to Eshwar Yedavalli and Cisco for
+        requesting and financing this feature. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17879">Bug #17879</a>
+      </li>
+
+      <li>
+        <strong>Added symbolic bit set value printing</strong><br/>
+        The bit set values are now printed with symbolic names
+        instead of numbers by the <code>MibWriter</code> pretty-printer.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17835">Bug #17835</a>
+      </li>
+
+      <li>
+        <strong>Changed some bundled IANA MIB files</strong><br/>
+        A number of IANA MIB files bundled with Mibble have been added
+        or updated. These are <code>IANAifType-MIB</code>,
+        <code>IANA-PRINTER-MIB</code>, <code>IANA-ITU-ALARM-TC-MIB</code>
+        and <code>IANA-IPPM-METRICS-REGISTRY-MIB</code>. Thanks to Bernd
+        Sorgenfrei for reporting this and providing a pointer to the new
+        versions. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16826">Bug #16826</a>
+      </li>
+
+      <li>
+        <strong>Changed some bundled IETF MIB files</strong><br/>
+        A number of IETF MIB files bundled with Mibble have been added
+        or updated. These are <code>INET-ADDRESS-MIB</code>,
+        <code>IP-FORWARD-MIB</code>, <code>SNMP-USM-AES-MIB</code>,
+        <code>TCP-MIB</code> and <code>UDP-MIB</code>.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16826">Bug #16826</a>
+      </li>
+
+      <li>
+        <strong>Fixed incorrect Mib.getRootSymbol method</strong><br/>
+        The <code>Mib.getRootSymbol()</code> method returned an invalid
+        root symbol in some cases and was unreliable. Thanks to Bernd
+        Sorgenfrei for reporting and fixing this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16824">Bug #16824</a>
+      </li>
+
+      <li>
+        <strong>Fixed duplicate loading of implicitly loaded MIBs</strong><br/>
+        Due to a bug in <code>MibLoader</code> that was introduced in
+        version 2.7, some MIBs could be loaded several times. This caused
+        higher loading times, more memory usage and duplicate MIBs being
+        returned by <code>MibLoader.getAllMibs()</code>. Thanks to Bernd
+        Sorgenfrei for reporting and fixing this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16825">Bug #16825</a>
+      </li>
+
+      <li>
+        <strong>Fixed parse error on references in AGENT-CAPABILITIES</strong><br/>
+        A parse error was thrown when using symbolic references in the
+        <code>DEFVAL</code>, <code>SYNTAX</code> or
+        <code>CREATION-REQUIRES</code> clauses inside an
+        <code>AGENT-CAPABILITIES</code> macro. This has now been corrected so
+        that the correct symbol name references are available. Thanks to
+        Eshwar Yedavalli and Cisco for reporting this and financing the bug fix.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17705">Bug #17705</a> &amp; <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17943">Bug #17943</a>
+      </li>
+
+      <li>
+        <strong>Fixed incorrect printing of binary and hexadecimal values</strong><br/>
+        The <code>MibWriter</code> class printed binary and hexadecimal
+        values with their shortest possible length, omitting any required
+        zero (0) padding. The code now considers the defining type to determine
+        the required amount of padding. Thanks to Eshwar Yedavalli and Cisco
+        for reporting this and financing the bug fix.<a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=17834">Bug #17834</a>
+      </li>
+
+      <li>
+        <strong>Fixed bad value error for some SNMP operations</strong><br/>
+        When attempting a <code>SET</code> operation on a counter or a
+        gauge value, the <code>MibbleBrowser</code> would return a "bad value
+        error". This has now been corrected by using the proper WestHawk SNMP
+        calls. Thanks to Paul Faid for finding and fixing this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=18591">Bug #18591</a>
+      </li>
+
+      <li>
+        <strong>Fixed incorrect value validation for size constraints</strong><br/>
+        The <code>SizeConstraint.isCompatible(MibValue)</code> method
+        always returned false, regardless of the value provided. This has now
+        been corrected, so that the actual length of an octet string value is
+        checked. Thanks to Paul Faid for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=18741">Bug #18741</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.7 (2006-05-28):</h2>
+
+    <ul>
+      <li>
+        <strong>Added MIB loader support for loading from a single file</strong><br/>
+        The <code>MibLoader</code> class now properly supports loading
+        MIB modules from a single file even if the modules have references
+        to each other. Previously it was only possible to load multiple MIBs
+        in a single file if the referenced MIB modules were placed at the top
+        of the file. Thanks to Ted Kaczmarek for suggesting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16417">Bug #16417</a>
+      </li>
+
+      <li>
+        <strong>Added detection of explicitly vs implicitly loaded MIBs</strong><br/>
+        The <code>Mib</code> class now contains a new
+        <code>isLoaded()</code> method to enable easy separation between
+        explicitly and implicitly loaded MIBs. The latter are MIB modules
+        that have been loaded due to an import declaration. The MibblePrinter
+        application has also been updated to print all explicitly loaded
+        MIBs instead of just the first MIB module in each file.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16419">Bug #16419</a>
+      </li>
+
+      <li>
+        <strong>Added numeric OID value cache for improved performance</strong><br/>
+        The <code>ObjectIdentifierValue</code> class now caches the
+        result of the <code>toString()</code> method in order to improve
+        performance. Thanks to Mohamed Ben-Hedi Sghaier for providing a fix
+        for this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16418">Bug #16418</a>
+      </li>
+
+      <li>
+        <strong>Added simple method for finding MIB importers</strong><br/>
+        The <code>Mib.getImportingMibs()</code> method has been added
+        to provide a simple API for finding MIB importers. If the returned
+        list is empty, the MIB is safe for unloading.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16543">Bug #16543</a>
+      </li>
+
+      <li>
+        <strong>Added easy access to the root object identifier</strong><br/>
+        The <code>MibLoader.getRootOid()</code> method has been added
+        to make it easier to access the root object identifier value (i.e.
+        the predefined <code>iso</code> value. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16544">Bug #16544</a>
+      </li>
+
+      <li>
+        <strong>Added easy lookup of referenced textual conventions</strong><br/>
+        The <code>SnmpTextualConvention.findReference()</code> method
+        has been added to enable easy lookup of referenced textual conventions.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16643">Bug #16643</a>
+      </li>
+
+      <li>
+        <strong>Changed toString() to print enumeration names</strong><br/>
+        The <code>BitSetType</code> and <code>IntegerType</code> classes
+        have been modified to print both enumeration names and values in the
+        <code>toString()</code> method. Both the MibbleBrowser and
+        MibblePrinter applications are affected by this, making it easier to
+        interpret SNMP results returned. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16420">Bug #16420</a>
+      </li>
+
+      <li>
+        <strong>Fixed issue with MIB unloading not removing references</strong><br/>
+        The <code>MibLoader.unload()</code> method didn't properly
+        remove all references to the MIB as the object identifier tree
+        remained linked. This has now been corrected so that an unloaded
+        MIB will be completely removed and eligible for garbage collection.
+        Thanks to Eshwar Yedavalli for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16285">Bug #16285</a>
+      </li>
+
+      <li>
+        <strong>Fixed IndexOutOfBoundsException for some error logs</strong><br/>
+        When loading MIB files with invalid line termination sequences
+        the <code>MibLoaderLog</code> couldn't properly locate and load the
+        context line for any errors. This has been fixed so that only
+        linefeed (LF, 0x0A) is counted in line numbers when reading context
+        lines. Thanks to Ted Kaczmarek for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16252">Bug #16252</a>
+      </li>
+
+      <li>
+        <strong>Fixed parse error for some ASCII control characters</strong><br/>
+        When loading MIB files with some unsupported ASCII control
+        characters, the parser failed with a parse exception. The parser has
+        now been modified to ignore a number of common control codes in ASCII,
+        such as form-feed, vertical tab, substitute and others. Thanks to
+        Gary Pientka for reporting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=16681">Bug #16681</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.6 (2005-12-10):</h2>
+
+    <ul>
+      <li>
+        <strong>Added a MIB pretty printer</strong><br/>
+        A SMIv2 pretty printer has been added to Mibble. It can
+        be accessed either with the <code>MibblePrinter</code>
+        utility application, or directly with the new
+        <code>MibWriter</code> class. Thanks to Cisco for financing this
+        work. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14638">Bug #14638</a>
+      </li>
+
+      <li>
+        <strong>Added new Mib convenience method</strong><br/>
+        The <code>Mib</code> class in the Mibble API has been
+        improved by the addition of a new <code>getRootSymbol()</code>
+        method for retrieving the root value symbol.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14831">Bug #14831</a>
+      </li>
+
+      <li>
+        <strong>Added new MibValueSymbol convenience methods</strong><br/>
+        The <code>MibValueSymbol</code> class in the Mibble API
+        has been improved by the addition of new methods for
+        retrieving child symbols. This will facilitate some accesses
+        that could previously be a bit cumbersome to write.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=13151">Bug #13151</a>
+      </li>
+
+      <li>
+        <strong>Added MIB import information retrieval</strong><br/>
+        The <code>Mib</code> class now contains a method
+        <code>getAllImports()</code> that allows retrieval of the
+        import declarations for a MIB. The class
+        <code>MibImport</code> has also been added to the public API.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14637">Bug #14637</a>
+      </li>
+
+      <li>
+        <strong>Added module and symbol comment retrieval</strong><br/>
+        The <code>Mib</code> and <code>MibSymbol</code> classes
+        in the Mibble API have been improved by allowing the
+        retrieval of MIB file comments. This will enable full access
+        to any ASN.1 comment text that were previously ignored.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14636">Bug #14636</a>
+      </li>
+
+      <li>
+        <strong>Added macro symbol retrieval</strong><br/>
+        The <code>MibMacroSymbol</code> class has been added to
+        the Mibble API, so that there is now three types of symbols.
+        This will enable full access to all imported symbols.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14727">Bug #14727</a>
+      </li>
+
+      <li>
+        <strong>Added SnmpCompliance type separation API</strong><br/>
+        The <code>SnmpCompliance</code> class didn't allow an
+        application to distinguish between GROUP and OBJECT
+        compliances easily. A new method <code>isGroup()</code> has
+        been added to the API so that this is now possible.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14765">Bug #14765</a>
+      </li>
+
+      <li>
+        <strong>Added SMI version number retrieval</strong><br/>
+        The <code>Mib</code> class now has a new method
+        <code>getSmiVersion</code> that returns the SMI version that
+        was used for defining the MIB. This makes it easier to
+        perform different validations for different MIB:s.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=15078">Bug #15078</a>
+      </li>
+
+      <li>
+        <strong>Added hashCode() and compareTo() implementations</strong><br/>
+        The <code>hashCode()</code> method has been added to
+        all classes implementing <code>equals()</code>. Also, the
+        <code>MibValue</code> class is now <code>Comparable</code>
+        making it easier to compare values. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=13222">Bug #13222</a>
+      </li>
+
+      <li>
+        <strong>Changed to support IMPLIED in index lists</strong><br/>
+        A new class <code>SnmpIndex</code> has been added to
+        encapsulate an index type or value. The method
+        <code>SnmpObjectType.getIndex()</code> has been modified to
+        return a list of these new index objects, which will break
+        existing code using this method. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10870">Bug #10870</a>
+      </li>
+
+      <li>
+        <strong>Changed several SNMP text returning methods</strong><br/>
+        The <code>getDescription()</code> and similar methods
+        in several SNMP type classes have been modified to remove a
+        cleaner version of the text (with indentation removed). This
+        was introduced in 2.5 for one field, but has now been
+        expanded to more fields. Use the corresponding
+        <code>getUnformattedXXX()</code> methods for the original
+        behaviour. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=14728">Bug #14728</a>
+      </li>
+
+      <li>
+        <strong>Changed enumeration symbol ordering</strong><br/>
+        The <code>getAllSymbols()</code> method in the
+        <code>BitSetType</code> and <code>IntegerType</code> classes
+        has been modified to return the symbol list in the same order
+        as the symbols appears in the MIB file. The internal list
+        representation was changed to <code>LinkedHashMap</code>,
+        so JDK 1.4 is now required. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=13221">Bug #13221</a>
+      </li>
+
+      <li>
+        <strong>Changed OID validation for mismatched names</strong><br/>
+        When two OID:s used different names for the same
+        component, this was previously considered a MIB loading error.
+        The error message for this has been clarified and it is now
+        just a warning instead of an error. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=13309">Bug #13309</a>
+      </li>
+
+      <li>
+        <strong>Changed binary and hexadecimal value classes</strong><br/>
+        Two new <code>MibValue</code> classes have been
+        introduced to store binary and hexadecimal numbers. Both
+        inherit the old <code>NumberValue</code> class, but modify
+        the implementation of <code>toString()</code> to print the
+        value in the correct ASN.1 representation. This might break
+        old code, but the old behaviour is available by using
+        <code>value.toObject().toString()</code> instead. Thanks to
+        Andreas Schönbach for suggesting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=15139">Bug #15139</a>
+      </li>
+
+      <li>
+        <strong>Fixed NullPointerException on some invalid OID:s</strong><br/>
+        When two OID:s used different names for the same
+        component, a NullPointerException was thrown when defining
+        value symbols using the second OID. This has been fixed so
+        that type or value validation errors should no longer be able
+        to cause NPE:s in later stages. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=13309">Bug #13309</a>
+      </li>
+
+      <li>
+        <strong>Fixed parse error for hex values in enumerations</strong><br/>
+        When using binary or hexadecimal values as integer
+        enumerated values, the parser displayed a syntax error. This
+        has now been fixed, so that both binary and hexadecimal
+        values are allowed. Thanks to Andreas Schönbach for reporting
+        this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=15027">Bug #15027</a>
+      </li>
+
+      <li>
+        <strong>Fixed issue with MIB file not being set in loader log</strong><br/>
+        The MIB file was sometime set to null in the
+        <code>MibLoaderLog</code> entries. This could cause
+        NullPointerExceptions when attepting to print an error or
+        a warning message. This has been fixed so that NPE:s will no
+        longer occur in these cases and the MIB loader should now
+        properly set the MIB file in all log entries.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10824">Bug #10824</a>
+      </li>
+
+      <li>
+        <strong>Fixed size constraint type validity checking</strong><br/>
+        The <code>SizeConstraint</code> didn't accept the
+        <code>StringType</code> as compatible, which has now been
+        fixed. All constraints are now also checked for validity
+        upon type initialization. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10823">Bug #10823</a>
+      </li>
+
+      <li>
+        <strong>Fixed MibbleBrowser file chooser directory</strong><br/>
+        The file chooser dialog in the MibbleBrowser always
+        started in the user home directory instead of the current
+        directory. This has now been fixed and the application also
+        remembers where the directory where the last MIB was loaded.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=11767">Bug #11767</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.5 (2004-10-26):</h2>
+
+    <ul>
+      <li>
+        <strong>Added SNMPv2c &amp; SNMPv3 to the MIB browser</strong><br/>
+        The MIB browser application has been updated in a
+        variety of ways, adding support for SNMPv2c &amp; SNMPv3,
+        command-line MIB loading and improved tree walking. The
+        graphical interface has also been totally reworked so it
+        should now both look better and provide more visual feedback.
+        The browser is now also available in the commercial version.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10732">Bug #10732</a> &amp; <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10748">Bug #10748</a>
+      </li>
+
+      <li>
+        <strong>Added support for multiple MIB modules in a single file</strong><br/>
+        The library now supports loading multiple MIB modules
+        from a single file, as required per the ASN.1 standard. It
+        is still strongly recommended to place each MIB module in its
+        own file however. Thanks to Frank Fock for reporting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10261">Bug #10261</a>
+      </li>
+
+      <li>
+        <strong>Added new base class for SNMP macro types</strong><br/>
+        Added a new <code>SnmpType</code> class as a new base
+        class for all the SNMP macro types. So far the API it
+        provides is rather minimal, but it makes it easier to
+        distinguish between ASN.1 types and SNMP macro types. Thanks
+        to Thomas Åhlén for suggesting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10731">Bug #10731</a>
+      </li>
+
+      <li>
+        <strong>Added new convenience methods to some classes</strong><br/>
+        The <code>MibValueSymbol</code>,
+        <code>ObjectIdentifierValue</code> and <code>SnmpAccess</code>
+        classes in the Mibble API have been improved by the addition
+        of new methods. This will facilitate some searches or tests
+        that could previously be a bit cumbersome to write.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10634">Bug #10634</a>
+      </li>
+
+      <li>
+        <strong>Added OID tree printing to MibblePrinter</strong><br/>
+        The <code>MibblePrinter</code> test application has been
+        extended to allow several input files and now also contains an
+        option to print the complete OID tree. Thanks to Thomas Åhlén
+        for the original idea. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10651">Bug #10651</a>
+      </li>
+
+      <li>
+        <strong>Changed semantics of getDescription() method</strong><br/>
+        The <code>getDescription()</code> method has been
+        changed to return a cleaner version of the description text.
+        All unneeded indentation is removed and tab characters are
+        now replaced with spaces. The old semantics is available from
+        the new <code>getUnformattedDescription()</code> method.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10790">Bug #10790</a>
+      </li>
+
+      <li>
+        <strong>Changed the location of the bundled MIB files</strong><br/>
+        The MIB files bundled with Mibble have been moved to
+        a separate JAR-file. This makes it easier to replace, update
+        or remove them without modifying other parts of Mibble. As a
+        result of this, the parser JAR-file has also been renamed.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10648">Bug #10648</a>
+      </li>
+
+      <li>
+        <strong>Changed the bundled MIB file content</strong><br/>
+        The MIB files bundled with Mibble have been updated.
+        Many new IANA and IETF MIB files have been added and quite a
+        few existing MIBs have been modified to the corresponding
+        latest version. Thanks to Thomas Åhlén for pointing this out.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10647">Bug #10647</a>
+      </li>
+
+      <li>
+        <strong>Fixed issue with OIDs not being merged properly</strong><br/>
+        The OID tree was previously missing child components
+        (symbols) in some cases. This could occur when the same OID
+        was defined in two MIB files, something commonly used to
+        avoid circular imports. Now all the OIDs are properly merged
+        to any depth, making sure that none are ignored. Thanks to
+        Thomas Åhlén for finding this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=9962">Bug #9962</a>
+      </li>
+
+      <li>
+        <strong>Fixed issue with MIBs being loaded as often as imported</strong><br/>
+        Previously it was possible that some base MIBs, that
+        were used in several places, got loaded several times by the
+        <code>MibLoader</code>. This didn't affect the correctness of
+        the results, but wasted time and memory. The MibLoader has
+        now been corrected to avoid this and therefore loads many MIB
+        files faster. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10673">Bug #10673</a>
+      </li>
+
+      <li>
+        <strong>Fixed OID searching in Mib.getSymbolByOid()</strong><br/>
+        The Mib.getSymbolByOid() method handled OIDs with table
+        indices erroneously due to a conceptual error. This has now
+        been corrected, but has unfortunately led to a slight API
+        change, removing the exactMatch parameter in the method call.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10765">Bug #10765</a>
+      </li>
+
+      <li>
+        <strong>Fixed documentation terminology and feature list</strong><br/>
+        Various pieces of documentation previously used the
+        wrong terminology for SMIv1 and SMIv2, which has now been
+        corrected. Also, the feature list has been updated to be a
+        bit more informative, although documentation will primarily
+        be added to the website from now on. Thanks to David T.
+        Perkins and Frank Fock for pointing out these shortcomings.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10170">Bug #10170</a> &amp; <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=10262">Bug #10262</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.4 (2004-05-27):</h2>
+
+    <ul>
+      <li>
+        <strong>Relicensed to GNU GPL</strong><br/>
+        Most of the source code has been relicensed to GNU GPL,
+        removing the previous linking exception. As an alternative to
+        using the GNU GPL license, a non-exclusive commercial license
+        for Mibble can be purchased. A FAQ explaining the implications
+        of this is available on the Mibble web site.
+      </li>
+
+      <li>
+        <strong>Added simpler OID to symbol lookup</strong><br/>
+        A new method <code>getSymbolByOid</code> has been added
+        to the <code>Mib</code> class to simplify the lookup of
+        symbols from OIDs. This method handles table row number inside
+        OIDs, that the <code>getSymbolByValue</code> method couldn't
+        handle. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=9117">Bug #9117</a>
+      </li>
+
+      <li>
+        <strong>Changed MIB loader to search inside files</strong><br/>
+        If the <code>MibLoader</code> fails to locate a MIB file
+        based on its name, it will now resort to read the first few
+        lines from all files in the search path until a matching MIB
+        name is found. Opening many files may be a potential
+        performance bottleneck, so it is still recommended best
+        practice to name MIB files according to the MIB module name.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=8862">Bug #8862</a>
+      </li>
+
+      <li>
+        <strong>Changed some symbol import errors to warnings</strong><br/>
+        Missing imports for symbols where the other symbols are
+        imported from the right MIB is no longer an error. A recovery
+        mechanism has been added searching for an undefined symbol in
+        all imported MIB files, issuing a warning instead of an error
+        if the symbol was found. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=8863">Bug #8863</a>
+      </li>
+
+      <li>
+        <strong>Changed to a simpler Ant build file</strong><br/>
+        The <code>build.xml</code> file for Apache Ant
+        distributed with Mibble has been simplified. It now also
+        contains some documentation to make it easier to use.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=9097">Bug #9097</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.3 (2004-03-10):</h2>
+
+    <ul>
+      <li>
+        <strong>Added graphical MIB browser</strong><br/>
+        A graphical MIB browser has been added that allows for
+        easy viewing of a MIB contents, while also sending SNMP
+        requests for objects. Many thanks to Watsh Rajneesh and HP
+        India for contributing the code. Thanks also to Charles F.
+        Schatz for providing an alternate implementation.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=4366">Bug #4366</a>
+      </li>
+
+      <li>
+        <strong>Added shell scripts for launching utilities</strong><br/>
+        Shell scripts for Unix and Windows have been added
+        for launching the Mibble utility programs. The original
+        scripts were contributed by Watsh Rajneesh.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6961">Bug #6961</a>
+      </li>
+
+      <li>
+        <strong>Added API for loading MIBs from more sources</strong><br/>
+        Added new <code>addResourceDir()</code> method to the
+        MibLoader class, allowing usage of the Java ClassLoader for
+        locating and loading MIB files. Also, new
+        <code>load(URL)</code> and <code>load(Reader)</code> methods
+        has been added to simplify loading MIBs from other sources.
+        The MibblePrinter and MibbleValidator programs have also been
+        extended to also support URLs. Thanks to Yun Freund for
+        suggesting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=7746">Bug #7746</a>
+      </li>
+
+      <li>
+        <strong>Added support for unloading MIBs</strong><br/>
+        Added new <code>unload()</code> methods to the MibLoader
+        class. It is now possible to remove references to a single MIB
+        without losing the references to all MIBs.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=7616">Bug #7616</a>
+      </li>
+
+      <li>
+        <strong>Added method for retrieving all OID children</strong><br/>
+        Added new <code>getAllChildren()</code> method to the
+        ObjectIdentifierValue class. This makes it easier to retrieve
+        all OID children at once. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=8046">Bug #8046</a>
+      </li>
+
+      <li>
+        <strong>Modified the API for MibLoader.load() slightly</strong><br/>
+        The various <code>load()</code> methods in the MibLoader
+        class have had their API slightly modified. They are now
+        declared to throw IOException instead of the previous
+        FileNotFoundException in order to accomodate the new
+        <code>load(URL)</code> and <code>load(Reader)</code> methods.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=7746">Bug #7746</a>
+      </li>
+
+      <li>
+        <strong>Modified OID child ordering</strong><br/>
+        The ObjectIdentifierValue child ordering has been
+        changed from undefined to numerical order. The new
+        implementation is actually faster than the previous one, due
+        to more clever object comparison than previously used. 
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=8090">Bug #8090</a>
+      </li>
+
+      <li>
+        <strong>Fixed issue with not always finding loaded MIBs</strong><br/>
+        Previously when loading named MIBs, the search path was
+        first used to locate the MIB file. If the MIB file couldn't be
+        found in the path, an exception is thrown. The MibLoader has
+        now been extended to first check the loaded MIB names, thereby
+        making it possible to manually load MIB files not adhering to
+        the MIB file naming standard. Thanks to Zemian Deng for
+        pointing this out. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6959">Bug #6959</a>
+      </li>
+
+      <li>
+        <strong>Fixed problem loading MIBs from current directory</strong><br/>
+        When loading MIB files from the current directory with
+        the MibblePrinter or MibbleValidator application, the
+        directory wasn't correctly added to the MibLoader path. This
+        has now been fixed, so MIB imports now works correctly even
+        for file names without a directory portion. 
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6528">Bug #6528</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.2 (2003-11-03):</h2>
+
+    <ul>
+      <li>
+        <strong>Added support for ASN1.1 type tags</strong><br/>
+        All primitive type now have default ASN.1 type tags and
+        these may also be overridden by tags in the MIB files. New
+        methods <code>isPrimitive()</code> and <code>getTag()</code>
+        has been added to <code>MibType</code>. Thanks to Sudhir
+        Khurana for pointing this out. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=5001">Bug #5001</a> &amp; 
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=5003">Bug #5003</a>
+      </li>
+
+      <li>
+        <strong>Added validation of sequence elements</strong><br/>
+        Sequence element names previously weren't validated
+        against the containing MIB. This has now been changed so
+        that sequence elements inside an OBJECT TYPE will be looked
+        up in the MIB. If no symbol with that name could be found,
+        a new default symbol is created. Thanks to Charles F. Schatz
+        for finding and reporting this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=5904">Bug #5904</a>
+      </li>
+
+      <li>
+        <strong>Added access to referenced type and value symbols</strong><br/>
+        When resolving type and value references, the
+        referenced symbol name was previously lost and only the type
+        or value information was extracted. This has been fixed and
+        new convenience methods <code>isReferenceTo()</code> in the
+        MibType and MibValue classes have been added. Thanks to
+        Charles F. Schatz for suggesting this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6112">Bug #6112</a>
+      </li>
+
+      <li>
+        <strong>Added a number of missing accessor methods</strong><br/>
+        Several primitive types lacked accessor methods for
+        retrieving the constraints, defined values and similar. The
+        MIB symbols lacked a getMib() method. These accessor methods
+        have now been added. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=5007">Bug #5007</a>
+      </li>
+
+      <li>
+        <strong>Changed the logging API</strong><br/>
+        The logging API was simplified by removal of the log
+        printing classes. The same functionality is now present
+        directly in the <code>MibLoaderLog</code> class. A new method
+        <code>entries()</code> allows direct retrieval of all log
+        entries from the log, providing a more generic approach than
+        the previous one. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6116">Bug #6116</a>
+      </li>
+
+      <li>
+        <strong>Improved Javadoc API documentation</strong><br/>
+        The Javadoc API documentation has been generally
+        improved in various places. References to appropriate RFC
+        documents have been added along with initial package
+        overviews. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6155">Bug #6155</a>
+      </li>
+
+      <li>
+        <strong>Updated to version 1.4 of Grammatica</strong><br/>
+        The Grammatica library distributed with Mibble has been
+        updated to version 1.4 (from 1.3). The build file has been
+        simplified as a result of this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=5000">Bug #5000</a>
+      </li>
+
+      <li>
+        <strong>Removed some previously public methods</strong><br/>
+        A number of internal methods were previously public
+        although there was no need for them to be. This has been
+        fixed by making them private or package protected. Code that
+        called these methods should be modified to use the correct
+        public counterparts.
+      </li>
+    </ul>
+
+
+    <h2>Version 2.1 (2003-08-22):</h2>
+
+    <ul>
+      <li>
+        <strong>Corrected MIB symbol value search</strong><br/>
+        Searching for MIB symbols by value never returned any
+        results in the previous version. Thanks to Nigel Mellor for
+        finding and fixing this. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=4893">Bug #4893</a>
+      </li>
+
+      <li>
+        <strong>Updated to version 1.3 of Grammatica</strong><br/>
+        The Grammatica library distributed with Mibble has been
+        updated to version 1.3 (from 1.2). Minor changes have been
+        made to the parser to accomodate this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=4903">Bug #4903</a>
+      </li>
+    </ul>
+
+
+    <h2>Version 2.0 (2003-07-19):</h2>
+
+    <ul>
+      <li>
+        <strong>Complete rewrite with API and name change</strong><br/>
+        The project has been renamed to Mibble, and the library
+        has been completely rewritten from scratch. The API:s have
+        also been replaced to correct a number of serious flaws in
+        the previous design.
+      </li>
+
+      <li>
+        <strong>Added complete support for SNMPv2 and SNMPv3</strong><br/>
+        All types and constructs in SNMPv2 and SNMPv3 are now
+        supported.
+      </li>
+
+      <li>
+        <strong>Added a real MIB import mechanism</strong><br/>
+        Symbol imports are now handled by reading and parsing
+        the MIB file. Standard IANA and IETF MIB files have been
+        added to the JAR library, in order to always have these
+        imports available.
+      </li>
+
+      <li>
+        <strong>Added full access to all type information</strong><br/>
+        All of the type information can now be easily accessed
+        through methods in the type classes.
+      </li>
+
+      <li>
+        <strong>Added syntactical and semantical error recovery</strong><br/>
+        The MIB parser now attempts to recover from errors in
+        the MIB file. All encountered errors are available after the
+        parsing is complete. This change was made available by using
+        Grammatica instead of JavaCC to generate the parser.
+      </li>
+
+      <li>
+        <strong>Added warnings for wrong identifier case</strong><br/>
+        A warning is now issued if the first character in a
+        type identifier is lower-case, or if the first character in a
+        value identifier is upper-case.
+      </li>
+
+      <li>
+        <strong>Added HTML release notes</strong><br/>
+        The release notes are now generated to both text and
+        HTML format from an XML representation.
+      </li>
+
+      <li>
+        <strong>Changed parser generator to Grammatica</strong><br/>
+        The JavaCC parser generator has been replaced with
+        Grammatica. This was done as JavaCC isn't free software, and
+        Grammatica was chosen as it provides a simple grammar syntax,
+        a decent parsing and analysis framework, and very high
+        quality error handling.
+      </li>
+
+      <li>
+        <strong>Removed the old symbol tree model</strong><br/>
+        The symbol tree model has been removed as it was not
+        compatible with the new API:s.
+      </li>
+    </ul>
+
+
+    <h2>Version 1.2 (2003-03-27):</h2>
+
+    <ul>
+      <li>
+        <strong>Relicensing to GPL + linking exception</strong><br/>
+        Relicensed all the source code to GPL plus a linking
+        exception. See the new LICENSE.txt file for details.
+      </li>
+
+      <li>
+        <strong>Removed JavaCC requirement from Ant build file</strong><br/>
+        Removed the strict dependency of JavaCC from Ant build
+        file (build.xml). The JavaCC parser generator will be replaced
+        in a future version of the library.
+      </li>
+    </ul>
+
+
+    <h2>Version 1.1 (2003-01-06):</h2>
+
+    <ul>
+      <li>
+        <strong>Updated MIB syntax to SNMPv2</strong><br/>
+        The MIB file parser can now handle several new macros,
+        such as MODULE-IDENITY, OBJECT-IDENTITY, NOTIFICATION-TYPE,
+        OBJECT-GROUP, NOTIFICATION-GROUP, MODULE-COMPLIANCE and the
+        improved OBJECT-TYPE macro (as of SNMPv2).
+      </li>
+
+      <li>
+        <strong>Updated MIB syntax with textual conventions</strong><br/>
+        The MIB file parser can now handle the
+        TEXTUAL-CONVENTION macro type.
+      </li>
+
+      <li>
+        <strong>API changes breaking backwards compability</strong><br/>
+        The MIB class was renamed to Mib and several new
+        methods were added to allow easy access to the information
+        in the MIB file. Some old methods were also renamed to better
+        match the new methods.
+      </li>
+
+      <li>
+        <strong>Improved code style</strong><br/>
+        All the source code has been reindented to use four (4)
+        spaces, and various minor code style improvements have been
+        made in the source tree.
+      </li>
+
+      <li>
+        <strong>Improved API documentation</strong><br/>
+        The API documentation has been somewhat improved by
+        adding package descriptions and improving the class
+        comments.
+      </li>
+
+      <li>
+        <strong>Added MIB example code</strong><br/>
+        An example class has been added to demonstrate how the
+        library can be used.
+      </li>
+
+      <li>
+        <strong>Added initial test cases</strong><br/>
+        Some initial test cases have been added, making
+        regression testing easier. Much work is still missing on the
+        test cases, though.
+      </li>
+    </ul>
+
+
+    <h2>Version 1.0 (2002-08-14):</h2>
+
+    <ul>
+      <li>
+        <strong>First public release</strong><br/>
+        The first public release of this library.
+      </li>
+    </ul>
+
+  
+    <hr/>
+
+    <p class="footer">Mibble 2.9.2 (2009-04-11). See the
+    <a href="http://www.mibble.org/">Mibble web site</a>
+    for more information.</p>
+
+    <p class="footer">Copyright &copy; 2002-2005 Per Cederberg. Permission
+    is granted to copy this document verbatim in any medium, provided
+    that this copyright notice is left intact.</p>
+
+  </body>
+</html>

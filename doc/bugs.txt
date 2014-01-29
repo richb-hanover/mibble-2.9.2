@@ -1,0 +1,68 @@
+MIBBLE TODO-LIST
+================
+
+Known Issues
+------------
+
+  This is a list of the known issues as of the release of version 
+  2.9.2 (2009-04-11). The most up-to-date version of this list is 
+  available from the project bug tracker 
+  (http://savannah.nongnu.org/bugs/?group=mibble).
+
+    o There are currently no known issues.
+
+
+Suggested Improvements
+----------------------
+
+  This is a list of the suggested improvements as of the release of 
+  version 2.9.2 (2009-04-11). The most up-to-date version of this 
+  list is available from the project bug tracker 
+  (http://savannah.nongnu.org/bugs/?group=mibble).
+
+    o Support strict SMIv1 and SMIv2 parsing
+      When parsing SMIv1 files, no symbols or constructs from SMIv2 
+      should be available. The opposite goes for SMIv2 files. [Bug 
+      #4367]
+
+    o Create unit tests
+      All the source code should be tested automatically through 
+      JUnit or a similar tool. This is a minor issue, however, as the 
+      complete library is always tested with all the IETF MIB files 
+      on each build. [Bug #4368]
+
+    o Add SNMP client capabilities
+      The Mibble library currently has no support for SNMP agents or 
+      clients. It is possible to integrate with SNMP4J or the 
+      WestHawk SNMP stack to provide this. [Bug #6317]
+
+    o Validate SEQUENCE element types
+      The types in a SEQUENCE should be validated against their 
+      counterparts if also defined separately. [Bug #6547]
+
+    o Add object serialization
+      There is currently no easy way to store the state of a loaded 
+      Mib, so the same files have to be parsed every time which may 
+      be time consuming. By adding object serialization or similar 
+      this might be faster. [Bug #6960]
+
+    o Add error recovery for missing imports
+      Currently Mibble reports errors and fails loading of MIB files 
+      containing symbols that have not been properly imported. [Bug 
+      #7113]
+
+    o Support rarely used ASN.1 types and constraints
+      There are several rarely used ASN.1 type and constraint 
+      constructs that have not been implemented in Mibble. These 
+      include SET, SET OF, ANY and the ENUMERATED types. None of 
+      these are used in SNMP MIB files. [Bug #8093]
+
+
+_____________________________________________________________________
+
+Mibble 2.9.2 (2009-04-11). See http://www.mibble.org/ for more
+information.
+
+Copyright (c) 2002-2005 Per Cederberg. Permission is granted to copy
+this document verbatim in any medium, provided that this copyright
+notice is left intact.

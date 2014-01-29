@@ -1,0 +1,87 @@
+<doc>
+  <head>
+    <title>Mibble TODO-List</title>
+  </head>
+
+  <body>
+
+    <h1>Known Issues</h1>
+
+    <p>This is a list of the known issues as of the release of version
+    <param name="version" /> (<param name="date" />). The most
+    up-to-date version of this list is available from the
+    <ref url="http://savannah.nongnu.org/bugs/?group=mibble">project
+    bug tracker</ref>.</p>
+
+    <list>
+      <item>
+        <text>There are currently no known issues.</text>
+      </item>
+    </list>
+
+
+    <h1>Suggested Improvements</h1>
+
+    <p>This is a list of the suggested improvements as of the release
+    of version <param name="version" /> (<param name="date" />). The
+    most up-to-date version of this list is available from the
+    <ref url="http://savannah.nongnu.org/bugs/?group=mibble">project
+    bug tracker</ref>.</p>
+
+    <list>
+      <item>
+        <title>Support strict SMIv1 and SMIv2 parsing</title>
+        <text>When parsing SMIv1 files, no symbols or constructs from
+        SMIv2 should be available. The opposite goes for SMIv2 files.
+        <ref bug="4367" /></text>
+      </item>
+
+      <item>
+        <title>Create unit tests</title>
+        <text>All the source code should be tested automatically
+        through JUnit or a similar tool. This is a minor issue,
+        however, as the complete library is always tested with all
+        the IETF MIB files on each build. <ref bug="4368" /></text>
+      </item>
+
+      <item>
+        <title>Add SNMP client capabilities</title>
+        <text>The Mibble library currently has no support for SNMP
+        agents or clients. It is possible to integrate with SNMP4J or
+        the WestHawk SNMP stack to provide this.
+        <ref bug="6317" /></text>
+      </item>
+
+      <item>
+        <title>Validate SEQUENCE element types</title>
+        <text>The types in a <code>SEQUENCE</code> should be validated
+        against their counterparts if also defined separately.
+        <ref bug="6547" /></text>
+      </item>
+
+      <item>
+        <title>Add object serialization</title>
+        <text>There is currently no easy way to store the state of a
+        loaded Mib, so the same files have to be parsed every time
+        which may be time consuming. By adding object serialization or
+        similar this might be faster. <ref bug="6960" /></text>
+      </item>
+
+      <item>
+        <title>Add error recovery for missing imports</title>
+        <text>Currently Mibble reports errors and fails loading of MIB
+        files containing symbols that have not been properly imported.
+        <ref bug="7113" /></text>
+      </item>
+
+      <item>
+        <title>Support rarely used ASN.1 types and constraints</title>
+        <text>There are several rarely used ASN.1 type and constraint
+        constructs that have not been implemented in Mibble. These
+        include SET, SET OF, ANY and the ENUMERATED types. None of
+        these are used in SNMP MIB files. <ref bug="8093" /></text>
+      </item>
+    </list>
+
+  </body>
+</doc>

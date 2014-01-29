@@ -1,0 +1,49 @@
+MIBBLE AUTHORS
+==============
+
+Authors
+-------
+
+  This software package is the result of many hours of hard work. The 
+  persons involved as of this release are:
+
+    o Per Cederberg <per at percederberg dot net>
+      Original author of Mibble.
+
+    o Watsh Rajneesh <rwatsh at hp dot com>
+      MIB browser application.
+
+
+Acknowledgements
+----------------
+
+  The original ASN.1 grammar was extracted from the yacc and lex 
+  sources of Snacc, a free ASN.1 to C or C++ compiler. Parts of the 
+  grammar was also adapted from a JavaCC grammar provided freely by 
+  Helena Sarin. Other parts have been adapted from various IETF RFC:s.
+
+  Parts of this work originates from an internal MIB processing and 
+  code generation tool (Plug-Out) developed at Ericson Telecom. That 
+  tool was developed for a Master's thesis 
+  (http://www.percederberg.net/home/essays/master/master.html) in 
+  1999. Ericsson has since kindly allowed the relicensing of that 
+  code under the GNU GPL.
+
+  As of Mibble version 2.0, the library has been completely 
+  rewritten. None of the code from releases prior to 2.0 remain, and 
+  hence the Ericsson contribution is no longer visible as copyrights 
+  in the source code files.
+
+  As of Mibble version 2.3, a MIB browser application using the 
+  Westhawk SNMP stack (http://snmp.westhawk.co.uk/ 
+  (http://snmp.westhawk.co.uk/)) has been included.
+
+
+_____________________________________________________________________
+
+Mibble 2.9.2 (2009-04-11). See http://www.mibble.org/ for more
+information.
+
+Copyright (c) 2002-2005 Per Cederberg. Permission is granted to copy
+this document verbatim in any medium, provided that this copyright
+notice is left intact.

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This file was automatically generated. DO NOT EDIT! -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=ISO-8859-1"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <title>Mibble TODO-List</title>
+  </head>
+
+  <body>
+
+    <h1>Mibble TODO-List</h1>
+
+
+    <h2>Known Issues</h2>
+
+    <p>This is a list of the known issues as of the release of version
+    2.9.2 (2009-04-11). The most
+    up-to-date version of this list is available from the
+    <a href="http://savannah.nongnu.org/bugs/?group=mibble">project
+    bug tracker</a>.</p>
+
+    <ul>
+      <li>
+        There are currently no known issues.
+      </li>
+    </ul>
+
+
+    <h2>Suggested Improvements</h2>
+
+    <p>This is a list of the suggested improvements as of the release
+    of version 2.9.2 (2009-04-11). The
+    most up-to-date version of this list is available from the
+    <a href="http://savannah.nongnu.org/bugs/?group=mibble">project
+    bug tracker</a>.</p>
+
+    <ul>
+      <li>
+        <strong>Support strict SMIv1 and SMIv2 parsing</strong><br/>
+        When parsing SMIv1 files, no symbols or constructs from
+        SMIv2 should be available. The opposite goes for SMIv2 files.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=4367">Bug #4367</a>
+      </li>
+
+      <li>
+        <strong>Create unit tests</strong><br/>
+        All the source code should be tested automatically
+        through JUnit or a similar tool. This is a minor issue,
+        however, as the complete library is always tested with all
+        the IETF MIB files on each build. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=4368">Bug #4368</a>
+      </li>
+
+      <li>
+        <strong>Add SNMP client capabilities</strong><br/>
+        The Mibble library currently has no support for SNMP
+        agents or clients. It is possible to integrate with SNMP4J or
+        the WestHawk SNMP stack to provide this.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6317">Bug #6317</a>
+      </li>
+
+      <li>
+        <strong>Validate SEQUENCE element types</strong><br/>
+        The types in a <code>SEQUENCE</code> should be validated
+        against their counterparts if also defined separately.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6547">Bug #6547</a>
+      </li>
+
+      <li>
+        <strong>Add object serialization</strong><br/>
+        There is currently no easy way to store the state of a
+        loaded Mib, so the same files have to be parsed every time
+        which may be time consuming. By adding object serialization or
+        similar this might be faster. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=6960">Bug #6960</a>
+      </li>
+
+      <li>
+        <strong>Add error recovery for missing imports</strong><br/>
+        Currently Mibble reports errors and fails loading of MIB
+        files containing symbols that have not been properly imported.
+        <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=7113">Bug #7113</a>
+      </li>
+
+      <li>
+        <strong>Support rarely used ASN.1 types and constraints</strong><br/>
+        There are several rarely used ASN.1 type and constraint
+        constructs that have not been implemented in Mibble. These
+        include SET, SET OF, ANY and the ENUMERATED types. None of
+        these are used in SNMP MIB files. <a href="http://savannah.nongnu.org/bugs/index.php?func=detailitem&amp;item_id=8093">Bug #8093</a>
+      </li>
+    </ul>
+
+  
+    <hr/>
+
+    <p class="footer">Mibble 2.9.2 (2009-04-11). See the
+    <a href="http://www.mibble.org/">Mibble web site</a>
+    for more information.</p>
+
+    <p class="footer">Copyright &copy; 2002-2005 Per Cederberg. Permission
+    is granted to copy this document verbatim in any medium, provided
+    that this copyright notice is left intact.</p>
+
+  </body>
+</html>

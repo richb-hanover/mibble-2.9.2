@@ -1,0 +1,53 @@
+MIBBLE INSTALLATION INSTRUCTIONS
+================================
+
+Requirements
+------------
+
+  The following requirements must be met in order to use Mibble:
+
+    o Java runtime compatible with JDK 1.4.
+
+
+Installation
+------------
+
+  This software does not require any special installation. The only 
+  files needed are the jar-files in the lib subdirectory.
+
+
+Running
+-------
+
+  Mibble is a library, but provides a simple MIB file browser 
+  application that can be used for testing purposes. It can be run by 
+  double-clicking the MibbleBrowser.jar file that is found in the 
+  base directory.
+
+  There are also a few other test tools that can be run from the 
+  command-line or via the following scripts:
+
+  bin/MibbleBrowser.sh or bin/MibbleBrowser.bat
+
+  bin/MibblePrinter.sh or bin/MibblePrinter.bat
+
+  bin/MibbleValidator.sh or bin/MibbleValidator.bat
+
+  The above scripts should find and set the Java CLASSPATH to the 
+  jar-files in the lib subdirectory:
+
+    o mibble-parser-2.9.2.jar
+
+    o mibble-mibs-2.9.2.jar
+
+    o snmp6_0.jar (only required by MibbleBrowser)
+
+
+_____________________________________________________________________
+
+Mibble 2.9.2 (2009-04-11). See http://www.mibble.org/ for more
+information.
+
+Copyright (c) 2002-2005 Per Cederberg. Permission is granted to copy
+this document verbatim in any medium, provided that this copyright
+notice is left intact.

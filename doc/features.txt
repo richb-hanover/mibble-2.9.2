@@ -1,0 +1,63 @@
+MIBBLE FEATURES
+===============
+
+Existing Features
+-----------------
+
+  This is a summary of the features currently present in Mibble.
+
+    o Full support for both SMIv1 and SMIv2
+      The library contains full support for both SNMP SMI versions 
+      and comes bundled with all the standard IANA and IETF MIB files.
+
+    o Support for much of the ASN.1 syntax
+      Mibble not only supports parsing SNMP MIB files, but also 
+      parses generic ASN.1 files (with some exceptions). This makes 
+      it possible to use the library in non-SNMP contexts as well.
+
+    o Proper import & symbol handling
+      Each referenced module is imported either from the bundled MIB 
+      files or from an externally supplied source (filesystem or 
+      URL). Symbols can also be prefixed with their module names to 
+      avoid possible naming conflicts.
+
+    o Full access to all type information
+      All the type and value information from the files are available 
+      to an application through public methods in the library. A 
+      complete in-memory structure is created for quick access to all 
+      this information.
+
+    o Detailed and precise error messages
+      Messages generated when an error is found always describe the 
+      problem with all required details. Error messages also contains 
+      a short except from the MIB file.
+
+    o Complete source code available
+      The source code for the complete library is freely available 
+      under either the GNU GPL or a commercial license. This makes it 
+      easy to check details in the implementation or to make small 
+      adjustments.
+
+    o Commercial license available for proprietary software
+      The GNU GPL licence does not allow distribution of products 
+      based on Mibble unless they are licensed under the GNU GPL 
+      themselves. A commercial license containing the full source 
+      code for Mibble is therefore available for sale.
+
+
+Upcoming Features
+-----------------
+
+  No commitment has been made regarding which new features will be 
+  present in future releases. See the TODO-list (in bugs.txt) for a 
+  the currently known future improvements.
+
+
+_____________________________________________________________________
+
+Mibble 2.9.2 (2009-04-11). See http://www.mibble.org/ for more
+information.
+
+Copyright (c) 2002-2005 Per Cederberg. Permission is granted to copy
+this document verbatim in any medium, provided that this copyright
+notice is left intact.
