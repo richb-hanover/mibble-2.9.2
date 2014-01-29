@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -64,6 +65,7 @@ import javax.swing.tree.TreePath;
 import net.percederberg.mibble.MibLoaderException;
 import net.percederberg.mibble.MibValueSymbol;
 import net.percederberg.mibble.MibbleBrowser;
+import net.percederberg.mibble.Mib;
 
 /**
  * The main MIB browser application window (frame).
@@ -218,6 +220,13 @@ public class BrowserFrame extends JFrame {
             }
         });
         menu.add(item);
+		item = new MenuItem("Import MIB...", new MenuShortcut(KeyEvent.VK_I));
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                importMib();
+            }
+        });
+        menu.add(item);
         item = new MenuItem("Unload MIB", new MenuShortcut(KeyEvent.VK_W));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -349,6 +358,32 @@ public class BrowserFrame extends JFrame {
      * Opens the load MIB dialog.
      */
     protected void loadMib() {
+		//•IMPLEMENT THIS
+		
+		//Show a dialog with a list of internal MIBs from the resources.
+		//use browser.getResourceMIBs() to get a Map of directory->MIB file.
+		//Display a JTree for MIB selection.
+		//When user selects a MIB and presses OK, then load the MIB.
+		ResourceMibDialog dialog = new ResourceMibDialog( this, browser.getResourceMIBs() );
+		
+		dialog.setLocationRelativeTo( this );
+		dialog.setVisible( true );
+		
+		String[] mibs = dialog.getSelectedMIBs();
+		if ( mibs != null ) {
+			setBlocked( true );
+			for ( int i = 0; i < mibs.length; i++ ) {
+				loadMib( mibs[i] );
+			}
+			refreshTree();
+			setBlocked( false );
+		}
+    }
+	
+    /**
+     * Opens a FileDialog for the user to select a MIB file to import.
+     */
+    protected void importMib() {
         FileDialog  dialog = new FileDialog(this, "Select MIB File");
         Loader      loader;
         String      file;
@@ -365,7 +400,7 @@ public class BrowserFrame extends JFrame {
             loader.start();
         }
     }
-
+	
     /**
      * Loads a MIB file from a specified source.
      *
@@ -545,7 +580,30 @@ public class BrowserFrame extends JFrame {
         if (node == null) {
             descriptionArea.setText("");
         } else {
-            descriptionArea.setText(node.getDescription());
+			String txt = node.getDescription();
+			if ( (txt == null) || (txt.trim().length() == 0) ) {
+				Mib mib = browser.getMib( node.getName() );
+				boolean useText = true;
+				if ( mib != null ) {
+					URL url = browser.getURL( mib );
+					if ( url != null ) {
+						try {
+							descriptionArea.read(
+												 new java.io.InputStreamReader( url.openStream() ),
+												 mib.getName()
+							);
+							useText = false;
+						} catch (java.io.IOException ioerr) {
+							useText = true;
+						}
+					}
+				}
+				if ( useText ) {
+					descriptionArea.setText(txt);
+				}
+			} else {
+				descriptionArea.setText(txt);
+			}
             descriptionArea.setCaretPosition(0);
         }
         snmpPanel.updateOid();

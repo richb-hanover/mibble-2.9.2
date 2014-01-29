@@ -23,9 +23,19 @@ package net.percederberg.mibble;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.prefs.Preferences;
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
 
 import javax.swing.UIManager;
 
@@ -96,7 +106,7 @@ public class MibbleBrowser {
      * @param args           the command-line arguments
      */
     public void start(String[] args) {
-        BrowserFrame  frame;
+        final BrowserFrame  frame;
         ArrayList     list;
         String        str;
 
@@ -126,11 +136,14 @@ public class MibbleBrowser {
             printInternalError(e);
         }
         frame = new BrowserFrame(this);
+		// Add a Shutdown Hook to ensure that quit() is invoked no matter how the program exits.
         frame.setVisible(true);
-
+		
         // Load command-line & preference MIBs
         frame.setBlocked(true);
         list = getFilePrefs();
+		List cachedMIBs = getCachedMIBPrefs();
+		list.addAll( cachedMIBs );
         for (int i = 0; i < args.length; i++) {
             list.add(args[i]);
         }
@@ -138,8 +151,13 @@ public class MibbleBrowser {
             frame.loadMib(list.get(i).toString());
         }
         if (list.size() <= 0) {
+			//load default MIBs if none were specified in the prefs or command-line arguments
             frame.loadMib("RFC1213-MIB");
             frame.loadMib("HOST-RESOURCES-MIB");
+			//richb wants the following to also be loaded by default.  -TEX 12-17-09
+			frame.loadMib("RFC1155-SMI");
+			frame.loadMib("SNMPv2-SMI");
+			frame.loadMib("SNMPv2-TC");
         }
         frame.refreshTree();
         frame.setBlocked(false);
@@ -189,7 +207,26 @@ public class MibbleBrowser {
     public Properties getBuildInfo() {
         return buildInfo;
     }
-
+	
+    public Mib getMib(String src) {
+        MibTreeBuilder  mb = MibTreeBuilder.getInstance();
+        File            file = new File(src);
+        Mib             mib = null;
+		
+        if (file.exists()) {
+            mib = loader.getMib(file);
+        }
+		if ( mib == null ) {
+            mib = loader.getMib(src);
+        }
+        return mib;
+    }
+	
+	public URL getURL( Mib m )
+	{
+		return loader.getURL( m );
+	}
+	
     /**
      * Loads MIB file or URL.
      *
@@ -204,7 +241,8 @@ public class MibbleBrowser {
         MibTreeBuilder  mb = MibTreeBuilder.getInstance();
         File            file = new File(src);
         Mib             mib = null;
-
+		
+		removeFilePref( file );		//If there is an error while loading the MIB from the file, then don't keep it in the prefs.
         if (file.exists()) {
             if (loader.getMib(file) != null) {
                 return;
@@ -217,6 +255,9 @@ public class MibbleBrowser {
             addFilePref(file);
         } else {
             mib = loader.load(src);
+			if ( mib != null ) {
+				addCachedMIBPref( src );
+			}
         }
         mb.addMib(mib);
     }
@@ -231,6 +272,7 @@ public class MibbleBrowser {
 
         if (mib != null) {
             removeFilePref(mib.getFile());
+			removeCachedMIBPref( mib.getName() );
             try {
                 loader.unload(name);
             } catch (MibLoaderException ignore) {
@@ -247,10 +289,118 @@ public class MibbleBrowser {
      */
     public void unloadAllMibs() {
         removeFilePrefs();
+		removeCachedMIBPrefs();
         loader.unloadAll();
         MibTreeBuilder.getInstance().unloadAllMibs();
     }
+	
+    /**
+     * Returns all MIBs found in the resources.
+     *
+     * @return a map containing the MIBs from the resources.  Each key of the Map is a 'resourceDir', and each value is a List of MIB files in that directory.
+     */
+	public Map getResourceMIBs()
+	{
+		ClassLoader classloader = getClass().getClassLoader();
+		String[] dirs = loader.getResourceDirs();
+		URL url;
+		java.util.regex.Matcher m = java.util.regex.Pattern.compile( ".*file:(.*\\.jar)!/?(.+).*" ).matcher("");
+		Map mibPaths = new HashMap(4);
+		String mibDir;
+		List mibFiles;
+		Enumeration mibEnum;
+		JarFile jarFile;
+		JarEntry jarEntry;
+		
+		for ( int i = 0; i < dirs.length; i++ ) {
+			url = classloader.getResource( dirs[i] );
+			if ( url != null ) {
+				m.reset(url.getFile());
+				if ( m.matches() && (m.groupCount() > 1) ) {
+					try {
+						jarFile = new JarFile( m.group(1) );
+						mibFiles = new LinkedList();
+						mibDir = m.group(2);
+						mibPaths.put( mibDir, mibFiles );
+						mibEnum = jarFile.entries();
+						while ( mibEnum.hasMoreElements() ) {
+							jarEntry = (JarEntry) mibEnum.nextElement();
+							if ( jarEntry.getName().startsWith( mibDir ) && !jarEntry.isDirectory() ) {
+								mibFiles.add( jarEntry.getName() );
+							}
+						}
+					} catch (IOException ioerr) {
+						printInternalError(ioerr);
+					}
+				}
+			}
+		}
+		
+		//Each key in mibPaths is now a 'resourceDir' and its value is a list of MIBS the resourceDir contains.
+		
+		//sort the lists
+		Iterator mibLists = mibPaths.values().iterator();
+		while ( mibLists.hasNext() ) {
+			Collections.sort( (List) mibLists.next() );
+		}
+		
+		return mibPaths;
+	}
 
+    /**
+     * Adds a specified cached MIB preference.
+     *
+     * @param name           the MIB to add
+     */
+    private void addCachedMIBPref(String name) {
+        ArrayList  list = getCachedMIBPrefs();
+		
+        if (!list.contains(name)) {
+            prefs.put("MIB" + list.size(), name);
+        }
+    }
+	
+    /**
+     * Removes a specified cached MIB preference.
+     *
+     * @param name           the MIB to remove
+     */
+    private void removeCachedMIBPref(String name) {
+        ArrayList  list = getCachedMIBPrefs();
+		
+        removeCachedMIBPrefs();
+        list.remove(name);
+        for (int i = 0; i < list.size(); i++) {
+            prefs.put("MIB" + i, list.get(i).toString());
+        }
+    }
+	
+    /**
+     * Returns the application cached MIB preferences.
+     *
+     * @return the list of MIBs to load
+     */
+    private ArrayList getCachedMIBPrefs() {
+        ArrayList  list = new ArrayList();
+		
+        for (int i = 0; i < 1000; i++) {
+            String str = prefs.get("MIB" + i, null);
+            if (str != null) {
+                list.add(str);
+            }
+        }
+        return list;
+    }
+	
+    /**
+     * Removes all application cached-MIB preferences.
+     */
+    private void removeCachedMIBPrefs() {
+        for (int i = 0; i < 1000; i++) {
+            prefs.remove("MIB" + i);
+        }
+    }
+	
     /**
      * Adds a specified MIB file preference.
      *
@@ -258,8 +408,8 @@ public class MibbleBrowser {
      */
     private void addFilePref(File file) {
         ArrayList  list = getFilePrefs();
-
-        if (!list.contains(file.getAbsolutePath())) {
+		
+		if (!list.contains(file.getAbsolutePath())) {
             prefs.put("file" + list.size(), file.getAbsolutePath());
         }
     }

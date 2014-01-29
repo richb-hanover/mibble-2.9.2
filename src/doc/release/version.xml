@@ -9,6 +9,25 @@
 
     <list>
       <item>
+        <title>Persistent MIBs List</title>
+        <text>MibBrowser now saves the list of loaded MIBs and automatically
+        loads the all MIBs in the stored list at startup.  If there are no
+        stored MIBs, a default set will be loaded.
+        </text>
+      </item>
+
+      <item>
+        <title>Addded MIB file text to display</title>
+        <text>When a MIB is selected, the full text of the MIB file will be
+	displayed in the main textarea.
+        </text>
+      </item>
+    </list>
+
+    <h1>Version 2.9.2 (2009-04-11):</h1>
+
+    <list>
+      <item>
         <title>Changed missing SMI import from error to warning</title>
         <text>Some MIB files lacks a proper SMI MIB import, previously causing
         a parse error due to unresolved symbols. This has now been fixed by
